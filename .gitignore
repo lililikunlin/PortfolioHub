@@ -24,3 +24,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase 相關暫存檔
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
