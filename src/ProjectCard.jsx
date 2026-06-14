@@ -75,7 +75,7 @@ export default function ProjectCard({ item, user }) {
       {item.link ? (
         <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block', cursor: 'pointer', flex: 1 }}>
           {item.thumb && (
-            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
+            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: item.imageHeight || '160px', objectFit: item.objectFit || 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
           )}
           <h3 style={{ color: 'var(--text-main)', marginTop: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
             {item.icon} 
@@ -89,7 +89,7 @@ export default function ProjectCard({ item, user }) {
       ) : (
         <div style={{ flex: 1 }}>
           {item.thumb && (
-            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
+            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: item.imageHeight || '160px', objectFit: item.objectFit || 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
           )}
           <h3 style={{ color: 'var(--text-main)', marginTop: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
             {item.icon} {item.title}

@@ -60,3 +60,16 @@ ul {
 li::marker {
   color: var(--neon-cyan);
 }
+
+.user-name-display {
+  display: inline !important;
+}
+
+@media (max-width: 600px) {
+  .user-name-display {
+    display: none !important;
+  }
+  .login-text {
+    display: none !important;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   UserCircle, Code, Shield, Award, Terminal, 
-  Briefcase, Gamepad2, Rocket, ExternalLink, LogOut, Sun, Moon
+  Briefcase, Gamepad2, Rocket, ExternalLink, LogOut, Sun, Moon, Activity, Database
 } from 'lucide-react';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase'; 
@@ -51,13 +51,26 @@ function App() {
   return (
     <div style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto' }}>
       
-      <div style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 1000 }}>
-        <button onClick={toggleTheme} className="glass-card" style={{ padding: '10px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-main)', width: '45px', height: '45px' }} title="切換深淺色模式">
-          {theme === 'dark' ? <Sun size={22} color="#ffb703" /> : <Moon size={22} color="var(--neon-purple)" />}
+      <div style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 1000, display: 'flex', alignItems: 'center', gap: '15px' }}>
+        {user ? (
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 15px' }}>
+            <img src={user.photoURL} alt="User Avatar" style={{ width: '28px', height: '28px', borderRadius: '50%', border: '2px solid var(--neon-cyan)' }} />
+            <span style={{ color: 'var(--text-main)', fontWeight: 'bold', fontSize: '0.9rem', display: 'none' }} className="user-name-display">{user.displayName}</span>
+            <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: '#ff5555', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }} title="登出">
+              <LogOut size={18} />
+            </button>
+          </div>
+        ) : (
+          <button onClick={handleGoogleLogin} className="glass-card" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)', padding: '8px 15px', fontSize: '0.9rem' }}>
+            <UserCircle size={20} color="var(--neon-purple)" /> <span className="login-text">登入</span>
+          </button>
+        )}
+        <button onClick={toggleTheme} className="glass-card" style={{ padding: '8px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-main)', width: '40px', height: '40px' }} title="切換深淺色模式">
+          {theme === 'dark' ? <Sun size={20} color="#ffb703" /> : <Moon size={20} color="var(--neon-purple)" />}
         </button>
       </div>
 
-      <header style={{ textAlign: 'center', marginBottom: '60px', marginTop: '40px' }}>
+      <header style={{ textAlign: 'center', marginBottom: '60px', marginTop: '60px' }}>
         <h1 style={{ fontSize: '3rem', margin: '0 0 10px 0', color: 'var(--text-main)', textShadow: '0 0 15px rgba(0, 240, 255, 0.4)' }}>
           昆霖 (Kun-Lin)
         </h1>
@@ -65,22 +78,6 @@ function App() {
           <Terminal size={20} />
           南臺科技大學資訊工程系 | 網頁開發者
         </p>
-        
-        <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-          {user ? (
-            <div className="glass-card" style={{ display: 'inline-flex', alignItems: 'center', gap: '15px', padding: '10px 20px' }}>
-              <img src={user.photoURL} alt="User Avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid var(--neon-cyan)' }} />
-              <span style={{ color: 'var(--text-main)', fontWeight: 'bold' }}>歡迎，{user.displayName}</span>
-              <button onClick={handleLogout} style={{ background: 'rgba(255, 50, 50, 0.1)', border: '1px solid rgba(255, 50, 50, 0.3)', color: '#ff5555', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <LogOut size={16} /> 登出
-              </button>
-            </div>
-          ) : (
-            <button onClick={handleGoogleLogin} className="glass-card" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)' }}>
-              <UserCircle size={24} color="var(--neon-purple)" /> Google 帳號登入
-            </button>
-          )}
-        </div>
       </header>
 
       <section className="glass-card" style={{ marginBottom: '50px' }}>
@@ -125,15 +122,28 @@ function App() {
         </div>
       </section>
 
-      <section className="glass-card" style={{ textAlign: 'center', padding: '40px 20px', borderColor: 'var(--neon-purple)', boxShadow: '0 0 20px rgba(138, 43, 226, 0.1)' }}>
-        <Rocket size={48} color="var(--neon-purple)" style={{ marginBottom: '15px' }} />
-        <h2 style={{ color: 'var(--text-main)', margin: '0 0 15px 0' }}>期末專題展示</h2>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '25px', maxWidth: '600px', margin: '0 auto 25px auto', lineHeight: '1.6' }}>
-          這裡預留了期末專題的展示空間。未來您可以點擊下方按鈕，直接跳轉至獨立的專題網站。
-        </p>
-        <button style={{ background: 'transparent', border: '1px solid var(--neon-cyan)', color: 'var(--neon-cyan)', padding: '12px 24px', borderRadius: '8px', fontSize: '1rem', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'all 0.3s' }}>
-          前往專題網站 <ExternalLink size={18} />
-        </button>
+      <section style={{ marginBottom: '50px' }}>
+        <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-main)', borderBottom: '1px solid var(--card-border)', paddingBottom: '15px', marginBottom: '25px' }}>
+          <Database size={28} color="var(--neon-purple)" /> 期末專題展示
+        </h2>
+        
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <ProjectCard 
+            key="orthanc-flask-telemed" 
+            user={user} 
+            item={{
+              id: 'orthanc-flask-telemed',
+              title: 'Orthanc × Flask 後端串接系統',
+              desc: '結合 Orthanc 醫療影像伺服器與 Flask 後端框架，並導入 FIDO2 生物辨識技術以確保醫療數據安全。系統包含完善的醫師身分驗證與系統帳號權限（Admin, Doctor, Patient）管理。',
+              icon: <Activity size={24} color="var(--neon-purple)"/>,
+              link: 'https://telemed-sec.duckdns.org:5000/',
+              thumb: '/telemed-preview.png',
+              objectFit: 'contain',
+              imageHeight: 'auto',
+              btnText: '前往系統'
+            }} 
+          />
+        </div>
       </section>
     </div>
   );
