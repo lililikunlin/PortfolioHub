@@ -72,12 +72,31 @@ export default function ProjectCard({ item, user }) {
 
   return (
     <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-      <div>
-        <h3 style={{ color: 'var(--text-main)', marginTop: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {item.icon} {item.title}
-        </h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{item.desc}</p>
-      </div>
+      {item.link ? (
+        <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block', cursor: 'pointer', flex: 1 }}>
+          {item.thumb && (
+            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
+          )}
+          <h3 style={{ color: 'var(--text-main)', marginTop: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {item.icon} 
+            {item.title}
+            <span style={{ marginLeft: 'auto', fontSize: '0.85rem', color: 'var(--neon-cyan)', textDecoration: 'none', border: '1px solid var(--neon-cyan)', padding: '4px 8px', borderRadius: '4px', transition: 'all 0.3s' }}>
+              {item.btnText || '前往'}
+            </span>
+          </h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: 0 }}>{item.desc}</p>
+        </a>
+      ) : (
+        <div style={{ flex: 1 }}>
+          {item.thumb && (
+            <img src={item.thumb} alt={item.title} style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px', border: '1px solid var(--card-border)' }} />
+          )}
+          <h3 style={{ color: 'var(--text-main)', marginTop: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {item.icon} {item.title}
+          </h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: 0 }}>{item.desc}</p>
+        </div>
+      )}
       
       <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--card-border)', paddingTop: '15px' }}>
         <div style={{ display: 'flex', gap: '5px', color: '#ffb703', alignItems: 'center' }}>

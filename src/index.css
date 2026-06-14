@@ -7,6 +7,18 @@
   --neon-purple: #8a2be2;
   --text-main: #f8f8f2;
   --text-muted: #a0a0b0;
+  --grid-color: rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="light"] {
+  --bg-dark: #f0f0f5;
+  --card-bg: rgba(0, 0, 0, 0.03);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --neon-cyan: #0088aa;
+  --neon-purple: #6a1b9a;
+  --text-main: #202028;
+  --text-muted: #606070;
+  --grid-color: rgba(0, 0, 0, 0.05);
 }
 
 body {
@@ -17,9 +29,10 @@ body {
   min-height: 100vh;
   /* 加上一點深色網格背景增加科技感 */
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 30px 30px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 提案中提到的：玻璃擬物化 (Glassmorphic) 卡片樣式 */
