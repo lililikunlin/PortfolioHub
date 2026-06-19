@@ -133,7 +133,7 @@ function App() {
             user={user} 
             item={{
               id: 'orthanc-flask-telemed',
-              title: 'Orthanc × Flask 後端串接系統',
+              title: '遠距醫療影像存取安全系統',
               desc: '結合 Orthanc 醫療影像伺服器與 Flask 後端框架，並導入 FIDO2 生物辨識技術以確保醫療數據安全。系統包含完善的醫師身分驗證與系統帳號權限（Admin, Doctor, Patient）管理。',
               icon: <Activity size={24} color="var(--neon-purple)"/>,
               link: 'https://telemed-sec.duckdns.org:5000/',
